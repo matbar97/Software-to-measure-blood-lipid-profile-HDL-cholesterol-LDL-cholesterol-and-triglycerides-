@@ -5,7 +5,7 @@ import java.util.Date;
  */
 public class Pacjent {
 
-	private String mImie, mNazwisko, mPESEL, P³eæ, Ubezpieczenie;
+	private String mImie, mNazwisko, mPESEL, Plec, Ubezpieczenie;
 	private int HDL, LDL, TG;
 	private Date data;
 
@@ -14,13 +14,13 @@ public class Pacjent {
 
 	}
 
-	public Pacjent(String mImie, String mNazwisko, String mPESEL, String P³eæ, String Ubezpieczenie, String HDL,
+	public Pacjent(String mImie, String mNazwisko, String mPESEL, String Plec, String Ubezpieczenie, String HDL,
 			String LDL, String TG, Date data) {
 		super();
 		this.mImie = mImie;
 		this.mNazwisko = mNazwisko;
 		this.mPESEL = mPESEL;
-		this.P³eæ = P³eæ;
+		this.Plec = Plec;
 		this.Ubezpieczenie = Ubezpieczenie;
 		this.HDL = 0;
 		this.LDL = 0;
@@ -53,12 +53,12 @@ public class Pacjent {
 		TG = tG;
 	}
 
-	public String getP³eæ() {
-		return P³eæ;
+	public String getPlec() {
+		return Plec;
 	}
 
-	public void setP³eæ(String p³eæ) {
-		P³eæ = p³eæ;
+	public void setPlec(String plec) {
+		Plec = plec;
 	}
 
 	public String getmImie() {
@@ -94,7 +94,7 @@ public class Pacjent {
 	}
 
 	// metody
-	// metoda porównuj¹ca pesele Pacjentów
+	// metoda porÄ‚Å‚wnujÃ„â€¦ca pesele PacjentÄ‚Å‚w
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -109,20 +109,10 @@ public class Pacjent {
 		return (true);
 	}
 
-	// metoda sprawdzaj¹ca czy pesel jest prawid³owy
-	public void checkPesel(String PESEL) {
-		int count = 0;
-		for (int i = 0, len = PESEL.length(); i < len; i++) {
-			if (Character.isDigit(PESEL.charAt(i))) {
-				count++;
-			}
-		}
-
-	}
 
 	@Override
 	public String toString() {
-		return "Pacjent [mImie=" + mImie + ", mNazwisko=" + mNazwisko + ", mPESEL=" + mPESEL + ", P³eæ=" + P³eæ
+		return "Pacjent [mImie=" + mImie + ", mNazwisko=" + mNazwisko + ", mPESEL=" + mPESEL + ", Plec=" + Plec
 				+ ", Ubezpieczenie=" + Ubezpieczenie + "" + "Data" + data + "]";
 	}
 

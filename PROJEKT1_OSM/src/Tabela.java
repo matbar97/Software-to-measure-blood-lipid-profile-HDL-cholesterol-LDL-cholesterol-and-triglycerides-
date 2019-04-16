@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,18 +14,17 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /*
- * Klasa w której generowany jest panel Lista Pacjentów wraz z tabel¹
+ * Klasa w ktÄ‚Å‚rej generowany jest panel Lista PacjentÄ‚Å‚w wraz z tabelÃ„â€¦
  */
 
 public class Tabela implements ActionListener {
 
-	static JButton bDodaj, bUsuñ;
+	static JButton bDodaj, bUsun;
 	static JTable tabela;
 	private JScrollPane spDanePacjenta;
-	private JCheckBox cbBadanie;
 	private Frame frame;
 	Object[] row = new Object[5];
-	JTable tListaPacjentów;
+	JTable tListaPacjentow;
 	DefaultTableModel model;
 	JPanel paneltabela;
 
@@ -47,10 +45,10 @@ public class Tabela implements ActionListener {
 		paneltabela.setBackground(Color.GREEN);
 		paneltabela.setLayout(null);
 
-		paneltabela.setBorder(BorderFactory.createTitledBorder("Lista Pacjentów"));
+		paneltabela.setBorder(BorderFactory.createTitledBorder("Lista Pacjentow"));
 		paneltabela.setBounds(405, 50, 1050, 700);
 
-		Object[] Dane = { "Imiê i nazwisko", "P³eæ", "Pesel", "Ubezpieczenie", "Badanie" };
+		Object[] Dane = { "Imie i nazwisko", "Plec", "Pesel", "Ubezpieczenie", "Badanie" };
 		model = new DefaultTableModel();
 		model.setColumnIdentifiers(Dane);
 
@@ -86,18 +84,18 @@ public class Tabela implements ActionListener {
 		bDodaj.setBounds(50, 630, 100, 25);
 		bDodaj.addActionListener(this);
 
-		bUsuñ = new JButton("Usuñ");
-		paneltabela.add(bUsuñ);
-		bUsuñ.setBounds(150, 630, 100, 25);
-		bUsuñ.setEnabled(false);
-		bUsuñ.addActionListener(this);
+		bUsun = new JButton("Usun");
+		paneltabela.add(bUsun);
+		bUsun.setBounds(150, 630, 100, 25);
+		bUsun.setEnabled(false);
+		bUsun.addActionListener(this);
 
 		// dodanie tabeli do panelu
 		spDanePacjenta = new JScrollPane(tabela);
 		spDanePacjenta.setBounds(50, 30, 900, 600);
 		paneltabela.add(spDanePacjenta);
 
-		// Obs³uga zdarzenia naciœniêcia przycisku myszy
+		// Obsluga zdarzenia nacisniecia przycisku myszy
 		tabela.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -106,23 +104,23 @@ public class Tabela implements ActionListener {
 				tabela.setDefaultEditor(Object.class, null);
 				tabela.setDefaultEditor(Boolean.class, null);
 
-				// dobranie siê do wiersza tabeli
+				// dobranie sie do wiersza tabeli
 				int i = tabela.getSelectedRow();
 
 				if (i == -1) {
 					tabela.clearSelection();
 				} else {
-					String s1 = DanePacjenta.lista.get(i).getP³eæ();
+					String s1 = DanePacjenta.lista.get(i).getPlec();
 
 					bDodaj.setEnabled(false);
 					DanePacjenta.tfImie.setEnabled(true);
 					DanePacjenta.lImie.setEnabled(true);
 					DanePacjenta.tfNazwisko.setEnabled(true);
 					DanePacjenta.lNazwisko.setEnabled(true);
-					DanePacjenta.rbMê¿czyzna.setEnabled(true);
+					DanePacjenta.rbMezczyzna.setEnabled(true);
 					DanePacjenta.rbKobieta.setEnabled(true);
 					DanePacjenta.tfPESEL.setEnabled(true);
-					DanePacjenta.lP³eæ.setEnabled(true);
+					DanePacjenta.lPlec.setEnabled(true);
 					DanePacjenta.lPESEL.setEnabled(true);
 					DanePacjenta.cbUbezpieczenie.setEnabled(true);
 					DanePacjenta.lUbezpieczenie.setEnabled(true);
@@ -141,8 +139,8 @@ public class Tabela implements ActionListener {
 
 					DanePacjenta.tfImie.setText(DanePacjenta.lista.get(i).getmImie());
 					DanePacjenta.tfNazwisko.setText(DanePacjenta.lista.get(i).getmNazwisko());
-					if (s1.contentEquals("Mê¿czyzna")) {
-						DanePacjenta.rbMê¿czyzna.setSelected(true);
+					if (s1.contentEquals("Mezczyzna")) {
+						DanePacjenta.rbMezczyzna.setSelected(true);
 					} else {
 						DanePacjenta.rbKobieta.setSelected(true);
 					}
@@ -159,7 +157,7 @@ public class Tabela implements ActionListener {
 
 	}
 
-	// metoda odpowiadaj¹ca za dodanie pacjenta do listy, sprawdzaj¹ca poprawnoœæ
+	// metoda odpowiadajaca za dodanie pacjenta do listy, sprawdzajaca poprawnosc
 	// dodawania
 	public void addPacjent(Pacjent p2) {
 		int i = tabela.getSelectedRow();
@@ -167,20 +165,17 @@ public class Tabela implements ActionListener {
 		for (Pacjent P : DanePacjenta.lista) {
 			if (i != -1) {
 			} else if (DanePacjenta.tfPESEL.getText().equals(P.getmPESEL())) {
-				JOptionPane.showMessageDialog(null, "Pacjent o tym numerze PESEL istnieje ju¿ w bazie.", "B³¹d zapisu",
+				JOptionPane.showMessageDialog(null, "Pacjent o tym numerze PESEL istnieje juÅ¼ w bazie.", "BÅ‚Ä…d zapisu",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-
 		}
-		p2.checkPesel(DanePacjenta.tfPESEL.getText());
-
 		if (i == -1) {
 			DanePacjenta.lista.add(p2);
 			Object[] wiersz = {
 					DanePacjenta.lista.get(DanePacjenta.lista.size() - 1).getmImie() + " "
 							+ DanePacjenta.lista.get(DanePacjenta.lista.size() - 1).getmNazwisko(),
-					DanePacjenta.lista.get(DanePacjenta.lista.size() - 1).getP³eæ(),
+					DanePacjenta.lista.get(DanePacjenta.lista.size() - 1).getPlec(),
 					DanePacjenta.lista.get(DanePacjenta.lista.size() - 1).getmPESEL(),
 					DanePacjenta.lista.get(DanePacjenta.lista.size() - 1).getUbezpieczenie() };
 
@@ -189,14 +184,14 @@ public class Tabela implements ActionListener {
 			DanePacjenta.lista.set(i, p2);
 			model.setValueAt(DanePacjenta.lista.get(i).getmImie() + " " + DanePacjenta.lista.get(i).getmNazwisko(), i,
 					0);
-			model.setValueAt(DanePacjenta.lista.get(i).getP³eæ(), i, 1);
+			model.setValueAt(DanePacjenta.lista.get(i).getPlec(), i, 1);
 			model.setValueAt(DanePacjenta.lista.get(i).getmPESEL(), i, 2);
 			model.setValueAt(DanePacjenta.lista.get(i).getUbezpieczenie(), i, 3);
 		}
 
 	}
 
-	// Obs³uga zdarzeñ
+	// Obsluga zdarzen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
@@ -208,10 +203,10 @@ public class Tabela implements ActionListener {
 			DanePacjenta.lImie.setEnabled(true);
 			DanePacjenta.tfNazwisko.setEnabled(true);
 			DanePacjenta.lNazwisko.setEnabled(true);
-			DanePacjenta.rbMê¿czyzna.setEnabled(true);
+			DanePacjenta.rbMezczyzna.setEnabled(true);
 			DanePacjenta.rbKobieta.setEnabled(true);
 			DanePacjenta.tfPESEL.setEnabled(true);
-			DanePacjenta.lP³eæ.setEnabled(true);
+			DanePacjenta.lPlec.setEnabled(true);
 			DanePacjenta.lPESEL.setEnabled(true);
 			DanePacjenta.cbUbezpieczenie.setEnabled(true);
 			DanePacjenta.lUbezpieczenie.setEnabled(true);
@@ -230,7 +225,7 @@ public class Tabela implements ActionListener {
 
 		}
 
-		if (source == bUsuñ) {
+		if (source == bUsun) {
 			int i = tabela.getSelectedRow();
 			if (i >= 0) {
 
@@ -243,7 +238,7 @@ public class Tabela implements ActionListener {
 				Badanie.tfLDL.setText(null);
 				Badanie.tfTG.setText(null);
 
-				bUsuñ.setEnabled(true);
+				bUsun.setEnabled(true);
 				model.removeRow(i);
 
 				DanePacjenta.lista.remove(i);
@@ -264,16 +259,16 @@ public class Tabela implements ActionListener {
 				DanePacjenta.tfNazwisko.setText(null);
 				DanePacjenta.tfPESEL.setText(null);
 				DanePacjenta.rbKobieta.setSelected(false);
-				DanePacjenta.rbMê¿czyzna.setSelected(false);
+				DanePacjenta.rbMezczyzna.setSelected(false);
 				DanePacjenta.cbUbezpieczenie.setSelectedIndex(-1);
 				DanePacjenta.tfImie.setEnabled(false);
 				DanePacjenta.lImie.setEnabled(false);
 				DanePacjenta.tfNazwisko.setEnabled(false);
 				DanePacjenta.lNazwisko.setEnabled(false);
-				DanePacjenta.rbMê¿czyzna.setEnabled(false);
+				DanePacjenta.rbMezczyzna.setEnabled(false);
 				DanePacjenta.rbKobieta.setEnabled(false);
 				DanePacjenta.tfPESEL.setEnabled(false);
-				DanePacjenta.lP³eæ.setEnabled(false);
+				DanePacjenta.lPlec.setEnabled(false);
 				DanePacjenta.lPESEL.setEnabled(false);
 				DanePacjenta.cbUbezpieczenie.setEnabled(false);
 				DanePacjenta.lUbezpieczenie.setEnabled(false);
@@ -281,10 +276,10 @@ public class Tabela implements ActionListener {
 				DanePacjenta.bAnuluj.setEnabled(false);
 
 				if (DanePacjenta.lista.isEmpty() == true) {
-					bUsuñ.setEnabled(false);
+					bUsun.setEnabled(false);
 				}
 			} else {
-				bUsuñ.setEnabled(false);
+				bUsun.setEnabled(false);
 			}
 		}
 	}

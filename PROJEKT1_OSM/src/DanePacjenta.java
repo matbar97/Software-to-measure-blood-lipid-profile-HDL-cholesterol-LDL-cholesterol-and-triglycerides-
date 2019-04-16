@@ -13,27 +13,26 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /*
- * Klasa w której generowany jest panel Dane Pacjenta
+ * Klasa w ktorej generowany jest panel Dane Pacjenta
  */
 
 public class DanePacjenta implements ActionListener {
 	protected JPanel pDanePacjenta;
-	static JLabel lImie, lNazwisko, lPESEL, lP³eæ, lUbezpieczenie;
+	static JLabel lImie, lNazwisko, lPESEL, lPlec, lUbezpieczenie;
 	static JTextField tfImie;
 	static JTextField tfNazwisko;
 	static JTextField tfPESEL;
 	static JTextField tfHDL;
 	static JTextField tfLDL;
 	static JTextField tfTG;
-	static JRadioButton rbKobieta, rbMê¿czyzna;
+	static JRadioButton rbKobieta, rbMezczyzna;
 	static JButton bZapisz;
 	static JButton bAnuluj;
-	static JComboBox cbUbezpieczenie;
+	static JComboBox<?> cbUbezpieczenie;
 	static ButtonGroup bg;
 	static ArrayList<Pacjent> lista;
 	private String[] ubezpieczenie = { "Brak", "NFZ", "Prywatne" };
 	private Frame frame;
-	private int count = 0;
 
 	// getter i setter dla panelu Dane Pacjenta
 	public JPanel getpDanePacjenta() {
@@ -47,7 +46,7 @@ public class DanePacjenta implements ActionListener {
 	public DanePacjenta(Frame frame) {
 		this.frame = frame;
 
-		// utworzenie, do której wpisywani s¹ pacjenci
+		// utworzenie, do ktorej wpisywani sa pacjenci
 		lista = new ArrayList<Pacjent>();
 
 		// Panel DanePacjenta i jego komponenty
@@ -57,7 +56,7 @@ public class DanePacjenta implements ActionListener {
 		pDanePacjenta.setBorder(BorderFactory.createTitledBorder("Dane pacjenta"));
 		pDanePacjenta.setBounds(0, 50, 400, 400);
 
-		lImie = new JLabel("Imiê: ");
+		lImie = new JLabel("Imie: ");
 		pDanePacjenta.add(lImie);
 		lImie.setBounds(10, 10, 100, 80);
 		lImie.setEnabled(false);
@@ -87,10 +86,10 @@ public class DanePacjenta implements ActionListener {
 		tfPESEL.setBounds(110, 135, 200, 30);
 		tfPESEL.setEnabled(false);
 
-		lP³eæ = new JLabel("P³eæ");
-		pDanePacjenta.add(lP³eæ);
-		lP³eæ.setBounds(10, 160, 100, 80);
-		lP³eæ.setEnabled(false);
+		lPlec = new JLabel("Plec");
+		pDanePacjenta.add(lPlec);
+		lPlec.setBounds(10, 160, 100, 80);
+		lPlec.setEnabled(false);
 
 		bg = new ButtonGroup();
 		rbKobieta = new JRadioButton();
@@ -100,14 +99,14 @@ public class DanePacjenta implements ActionListener {
 		rbKobieta.setBounds(110, 185, 70, 30);
 		rbKobieta.setEnabled(false);
 
-		rbMê¿czyzna = new JRadioButton();
-		pDanePacjenta.add(rbMê¿czyzna);
-		rbMê¿czyzna.setText("Mê¿czyzna");
-		rbMê¿czyzna.setActionCommand("Mê¿czyzna");
-		rbMê¿czyzna.setBounds(200, 185, 90, 30);
-		rbMê¿czyzna.setEnabled(false);
+		rbMezczyzna = new JRadioButton();
+		pDanePacjenta.add(rbMezczyzna);
+		rbMezczyzna.setText("Mezczyzna");
+		rbMezczyzna.setActionCommand("Mezczyzna");
+		rbMezczyzna.setBounds(200, 185, 90, 30);
+		rbMezczyzna.setEnabled(false);
 
-		bg.add(rbMê¿czyzna);
+		bg.add(rbMezczyzna);
 		bg.add(rbKobieta);
 
 		lUbezpieczenie = new JLabel("Ubezpieczenie");
@@ -135,17 +134,17 @@ public class DanePacjenta implements ActionListener {
 
 	}
 
-	// metoda sprawdzaj¹ca czy ³añcuch znaków to Integer
-	public boolean isStringInt(String s) {
+	// metoda sprawdzajaca czy lancuch znakow to Long
+	public boolean isStringLong(String s) {
 		try {
-			Integer.parseInt(s);
+			Long.parseLong(s);
 			return true;
 		} catch (NumberFormatException ex) {
 			return false;
 		}
 	}
 
-	// Obs³uga zdarzeñ
+	// ObsÄ¹â€šuga zdarzeÄ¹â€ž
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -157,28 +156,31 @@ public class DanePacjenta implements ActionListener {
 			tfNazwisko.setText(null);
 			tfPESEL.setText(null);
 			rbKobieta.setSelected(false);
-			rbMê¿czyzna.setSelected(false);
+			rbMezczyzna.setSelected(false);
 			cbUbezpieczenie.setSelectedIndex(-1);
 		}
 
 		if (source == bZapisz) {
 
-			// pêtla, która sprawdza, ile liczb zawiera wpisany pesel, mozna to zrobic w
-			// metodzie pacjent ale mi nie pyklo
 			if (tfImie.getText().isEmpty() == true || tfNazwisko.getText().isEmpty() == true
 					|| tfPESEL.getText().isEmpty() == true || bg.getSelection() == null
 					|| cbUbezpieczenie.getSelectedItem() == null) {
-				JOptionPane.showMessageDialog(null, "Wprowadz wszystkie dane", "B³¹d zapisu",
+				JOptionPane.showMessageDialog(null, "Wprowadz wszystkie dane", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (DanePacjenta.tfPESEL.getText().length() != 11) {
-				JOptionPane.showMessageDialog(null, "Wprowadz poprawny numer PESEL", "B³¹d zapisu",
+			} else if (tfPESEL.getText().length() != 11) {
+				JOptionPane.showMessageDialog(null, "Wprowadz poprawny numer PESEL", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
 				return;
-			} else if (!DanePacjenta.tfImie.getText().matches("^[a-zA-Z]+$")
-					|| !DanePacjenta.tfNazwisko.getText().matches("^[a-zA-Z]+$")) {
-				JOptionPane.showMessageDialog(null, "Podaj prawid³owe Imiê i Nazwisko", "B³¹d zapisu",
+			} else if (isStringLong(tfPESEL.getText()) == false) {
+				JOptionPane.showMessageDialog(null, "PESEL musi skladac sie tylko z cyfr. Podaj prawidlowy PESEL", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
+				return;
+			} else if (!tfImie.getText().matches("^[a-zA-Z]+$")
+					|| !tfNazwisko.getText().matches("^[a-zA-Z]+$")) {
+				JOptionPane.showMessageDialog(null,
+						"Imie i nazwisko nie moze skladac ze znakow niebedacych literami. Wprowadz prawidlowe imie i nazwisko (bez polskich znakow)",
+						"Blad zapisu", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
@@ -195,16 +197,16 @@ public class DanePacjenta implements ActionListener {
 				cbUbezpieczenie.setSelectedIndex(-1);
 			}
 
-			Tabela.bUsuñ.setEnabled(true);
+			Tabela.bUsun.setEnabled(true);
 			Tabela.bDodaj.setEnabled(true);
 			tfImie.setEnabled(false);
 			lImie.setEnabled(false);
 			tfNazwisko.setEnabled(false);
 			lNazwisko.setEnabled(false);
-			rbMê¿czyzna.setEnabled(false);
+			rbMezczyzna.setEnabled(false);
 			rbKobieta.setEnabled(false);
 			tfPESEL.setEnabled(false);
-			lP³eæ.setEnabled(false);
+			lPlec.setEnabled(false);
 			lPESEL.setEnabled(false);
 			cbUbezpieczenie.setEnabled(false);
 			lUbezpieczenie.setEnabled(false);

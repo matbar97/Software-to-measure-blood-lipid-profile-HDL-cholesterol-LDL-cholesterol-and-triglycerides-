@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,7 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
 /*
- * Klasa w której generowany jest panel Badanie
+ * Klasa w ktÄ‚Å‚rej generowany jest panel Badanie
  */
 public class Badanie implements ActionListener {
 	private JPanel pBadanie;
@@ -106,7 +107,7 @@ public class Badanie implements ActionListener {
 
 	}
 
-	// metoda sprawdzaj¹ca czy ³añcuch znaków to Integer
+	// metoda sprawdzajÃ„â€¦ca czy Ä¹â€šaÄ¹â€žcuch znakÄ‚Å‚w to Integer
 	public boolean isStringInt(String s) {
 		try {
 			Integer.parseInt(s);
@@ -116,7 +117,7 @@ public class Badanie implements ActionListener {
 		}
 	}
 
-	// Obs³uga zdarzeñ
+	// ObsÄ¹â€šuga zdarzeÄ¹â€ž
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -125,27 +126,27 @@ public class Badanie implements ActionListener {
 		if (source == bZapisz2)
 			if (tfHDL.getText().isEmpty() == true || tfLDL.getText().isEmpty() == true
 					|| tfTG.getText().isEmpty() == true) {
-				JOptionPane.showMessageDialog(null, "Wprowadz wszystkie dane", "B³¹d zapisu",
+				JOptionPane.showMessageDialog(null, "Wprowadz wszystkie dane", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
-			} else if (Integer.parseInt(tfHDL.getText()) >= 10000 || Integer.parseInt(tfHDL.getText()) < 0
-			/* || !Pattern.matches("^\n*$", tfHDL.getText()) */) {
-				JOptionPane.showMessageDialog(null, "Wprowadz wartoœæ HDL z zakresu 0-10000", "B³¹d zapisu",
+			} else if (isStringInt(tfHDL.getText()) == false || Integer.parseInt(tfHDL.getText()) >= 10000
+					|| Integer.parseInt(tfHDL.getText()) < 0) {
+				JOptionPane.showMessageDialog(null, "Wprowadz wartosc HDL z zakresu 0-10000", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
-			} else if (Integer.parseInt(tfLDL.getText()) >= 10000 || Integer.parseInt(tfLDL.getText()) < 0
-			/* || !Pattern.matches("^\n*$", tfLDL.getText()) */) {
-				JOptionPane.showMessageDialog(null, "Wprowadz wartoœæ LDL z zakresu 0-10000", "B³¹d zapisu",
+			} else if (isStringInt(tfLDL.getText()) == false || Integer.parseInt(tfLDL.getText()) >= 10000
+					|| Integer.parseInt(tfLDL.getText()) < 0) {
+				JOptionPane.showMessageDialog(null, "Wprowadz wartosc sLDL z zakresu 0-10000", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
-			} else if (Integer.parseInt(tfTG.getText()) >= 10000 || Integer.parseInt(tfTG.getText()) < 0
-			/* || !Pattern.matches("^\n*$", tfTG.getText()) */) {
-				JOptionPane.showMessageDialog(null, "Wprowadz wartoœæ trójglicerydów z zakresu 0-10000", "B³¹d zapisu",
+			} else if (isStringInt(tfTG.getText()) == false || Integer.parseInt(tfTG.getText()) >= 10000
+					|| Integer.parseInt(tfTG.getText()) < 0) {
+				JOptionPane.showMessageDialog(null, "Wprowadz wartosc trojglicerydow z zakresu 0-10000", "Blad zapisu",
 						JOptionPane.ERROR_MESSAGE);
 			}
 
 			else {
 				int i = Tabela.tabela.getSelectedRow();
 				if (i == -1) {
-					JOptionPane.showMessageDialog(null, "Wybierz pacjenta, do którego chcesz przyspisaæ wynik",
-							"B³¹d zapisu", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Wybierz pacjenta, do ktorego chcesz przyspisac wynik",
+							"Blad zapisu", JOptionPane.ERROR_MESSAGE);
 				} else {
 					DanePacjenta.lista.get(i).setHDL(Integer.parseInt(tfHDL.getText()));
 					DanePacjenta.lista.get(i).setLDL(Integer.parseInt(tfLDL.getText()));
@@ -171,16 +172,16 @@ public class Badanie implements ActionListener {
 					DanePacjenta.tfNazwisko.setText(null);
 					DanePacjenta.tfPESEL.setText(null);
 					DanePacjenta.rbKobieta.setSelected(false);
-					DanePacjenta.rbMê¿czyzna.setSelected(false);
+					DanePacjenta.rbMezczyzna.setSelected(false);
 					DanePacjenta.cbUbezpieczenie.setSelectedIndex(-1);
 					DanePacjenta.tfImie.setEnabled(false);
 					DanePacjenta.lImie.setEnabled(false);
 					DanePacjenta.tfNazwisko.setEnabled(false);
 					DanePacjenta.lNazwisko.setEnabled(false);
-					DanePacjenta.rbMê¿czyzna.setEnabled(false);
+					DanePacjenta.rbMezczyzna.setEnabled(false);
 					DanePacjenta.rbKobieta.setEnabled(false);
 					DanePacjenta.tfPESEL.setEnabled(false);
-					DanePacjenta.lP³eæ.setEnabled(false);
+					DanePacjenta.lPlec.setEnabled(false);
 					DanePacjenta.lPESEL.setEnabled(false);
 					DanePacjenta.cbUbezpieczenie.setEnabled(false);
 					DanePacjenta.lUbezpieczenie.setEnabled(false);
@@ -191,7 +192,7 @@ public class Badanie implements ActionListener {
 					Tabela.tabela.clearSelection();
 					bZapisz2.setEnabled(false);
 					bAnuluj2.setEnabled(false);
-					Tabela.bDodaj.setEnabled(true);
+					Tabela.bDodaj.setEnabled(true);   
 				}
 
 			}
